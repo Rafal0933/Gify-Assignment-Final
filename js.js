@@ -39,12 +39,8 @@ renderButtons();
 /*        API Key: LfsSAsc2EFXOzzChu9ONb5oazTS4RjT5*/
 
 
-function jifyRequest (gif) {
-  if(gif.indexOf(" ") > -1) {
-    gif = gif.split(" ").join("%20");
     for ( var i = 0; i < 10; i++){
 /*      var topic = "foo fighters"*/
-      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gif + "&api_key=LfsSAsc2EFXOzzChu9ONb5oazTS4RjT5"
 /*          console.log(request);
           console.log(request.data[0].id);*/
 
@@ -70,28 +66,10 @@ function jifyRequest (gif) {
         $("#images").prepend(catImage);
       });
     }
-  }
 };
 
-jifyRequest ("Foo Fighters");
 
 
-// RIGHT NOW IMMEDIATELY BEFORE YOU DO ANYTHING ELSE
-// DO A COMMIT AND PUSH TO GITHUB
-
-// make it so i can click a button and console.log the search term
-// remember that button click is what jQ calls an "event" and you can console.log the event and find what you need0
-// DO A COMMIT AND PUSH TO GITHUB
-
-
-// then you can do jifyRequest(searchTerm)
-// DO A COMMIT AND PUSH TO GITHUB
-
-
-
-// figure out how to make the new button work (first just console.log "hi button was clicked")
-// (then you'll be done beacuse you already have )
-// DO A COMMIT AND PUSH TO GITHUB
 
 
 // (can be done at any time) -- figure out how to pause the gifs. 1.  see in-class exercise
