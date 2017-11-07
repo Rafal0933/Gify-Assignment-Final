@@ -22,7 +22,7 @@ function renderButtons() {
 }
 
   $("#topic-view").on("click", function(event){
-    console.log(event.target.dataset.name);
+    jifyRequest(event.target.dataset.name);
   });
 
 
@@ -37,10 +37,9 @@ $("#submit").on("click", function(event) {
 //Pushes whatever was entered into the array//
     topics.push(topic);
 
-//Calls renderButton Function//
     renderButtons();
-    jifyRequest(topic);
 });
+
 //Calls the render button function to generate the buttons in the original array//
 renderButtons();
 
