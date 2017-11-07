@@ -1,4 +1,5 @@
 var topics = ["Football", "Weightlifting", "Bodybuilding", "Cardio"];
+var topic;
 
 function renderButtons() {
 
@@ -20,16 +21,24 @@ function renderButtons() {
     }
 }
 
+  $("#topic-view").on("click", function(event){
+    var getButtonId = $("#topic-view");
+    console.log(getButtonId);
+  });
+
+
 //On click function for submit button//
 $("#submit").on("click", function(event) {
 //Rather than hitting the button the user can press enter to generate the button//
     event.preventDefault();
+
 //Grabs value from topic input field and trims excess spaces//
     var topic = $("#topic-input").val().trim();
 //Pushes whatever was entered into the array//
     topics.push(topic);
 //Calls renderButton Function//
     renderButtons();
+    jifyRequest(topic);
 });
 //Calls the render button function to generate the buttons in the original array//
 renderButtons();
@@ -39,10 +48,17 @@ renderButtons();
 /*        API Key: LfsSAsc2EFXOzzChu9ONb5oazTS4RjT5*/
 
 
+function jifyRequest (topic) {
+
+    // Clear the images div //
+    $("#images").empty();
+
+    // Loop to get 10 images //
     for ( var i = 0; i < 10; i++){
-/*      var topic = "foo fighters"*/
-/*          console.log(request);
-          console.log(request.data[0].id);*/
+
+      // Variable to store the giphy website and enter the topic //
+      var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + topic + "&api_key=LfsSAsc2EFXOzzChu9ONb5oazTS4RjT5"
+
 
       $.ajax({
         url: queryURL,
@@ -51,32 +67,45 @@ renderButtons();
 
       // After the data from the AJAX request comes back
       .done(function(response) {
-
-        // Saving the image_original_url property
-        var imageUrl = response.data[i++].images.fixed_height.url;
-        console.log(imageUrl);
-        // Creating and storing an image tag
-        var catImage = $("<img>");
+        console.log(response);
+/*        var test = "data"+i;*/
+/*        console.log(test);*/
+        var stillImage = response.data[i].images.original_still.url;
+        var animateImage = response.data[i++].images.original.url;
+        var rating = response.data[i].rating;
+        var imageDiv = $("<span>"+ rating + "</span><img height='350px' width='350px'>");
 
         // Setting the catImage src attribute to imageUrl
-        catImage.attr("src", imageUrl);
-        catImage.attr("alt", "cat image");
+        imageDiv.attr("src", stillImage);
+        imageDiv.attr("data-state", "still");
+        imageDiv.attr("data-still", stillImage);
+        imageDiv.attr("data-animate", animateImage);
+        imageDiv.attr("alt", "cat image");
+        imageDiv.attr("class", "gif");
+        imageDiv.text("Rating:  " + rating);
 
         // Prepending the catImage to the images div
-        $("#images").prepend(catImage);
+        $("#images").prepend(imageDiv);
       });
     }
 };
 
+    $("#images").on("click", ".gif", function() {
+console.log("pressedByUser")
+      var state = $(this).attr("data-state");
+      if (state === "still") {
+        $(this).attr("src", $(this).attr("data-animate"));
+        $(this).attr("data-state", "animate");
+      } else {
+        $(this).attr("src", $(this).attr("data-still"));
+        $(this).attr("data-state", "still");
+      }
+    });
 
 
 
 
-// (can be done at any time) -- figure out how to pause the gifs. 1.  see in-class exercise
-// hint: use console.log to print response object and find what you need
 
 
 
-// in giphy documentation, so you don't have to make 10 ajax calls per topic, look in giphy documentation
-// and see how to specify the number of results (q)
 
