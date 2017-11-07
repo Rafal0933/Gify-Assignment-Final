@@ -22,8 +22,7 @@ function renderButtons() {
 }
 
   $("#topic-view").on("click", function(event){
-    var getButtonId = $("#topic-view");
-    console.log(getButtonId);
+    console.log(event.target.dataset.name);
   });
 
 
