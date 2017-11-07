@@ -34,8 +34,10 @@ $("#submit").on("click", function(event) {
 
 //Grabs value from topic input field and trims excess spaces//
     var topic = $("#topic-input").val().trim();
+
 //Pushes whatever was entered into the array//
     topics.push(topic);
+
 //Calls renderButton Function//
     renderButtons();
     jifyRequest(topic);
@@ -73,19 +75,29 @@ function jifyRequest (topic) {
         var stillImage = response.data[i].images.original_still.url;
         var animateImage = response.data[i++].images.original.url;
         var rating = response.data[i].rating;
-        var imageDiv = $("<span>"+ rating + "</span><img height='350px' width='350px'>");
 
-        // Setting the catImage src attribute to imageUrl
+        // Create an div that holds image and rating  //
+        var resultContainer = $("<div class='gif'>");
+
+        // Create Image Element //
+        var imageDiv = $("<img>");
         imageDiv.attr("src", stillImage);
         imageDiv.attr("data-state", "still");
         imageDiv.attr("data-still", stillImage);
         imageDiv.attr("data-animate", animateImage);
         imageDiv.attr("alt", "cat image");
-        imageDiv.attr("class", "gif");
-        imageDiv.text("Rating:  " + rating);
 
-        // Prepending the catImage to the images div
-        $("#images").prepend(imageDiv);
+
+        // Create rating element //
+        var ratingElement = $("<p>");
+        ratingElement.text("Rating :" + rating);
+
+        // Append items to container //
+        resultContainer.append(ratingElement);
+        resultContainer.append(imageDiv);
+
+        // Prepend container to DOM //
+        $("#images").prepend(resultContainer);
       });
     }
 };
